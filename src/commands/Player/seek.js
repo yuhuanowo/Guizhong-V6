@@ -6,10 +6,10 @@ const config = require("../../config");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("seek")
-        .setDescription("Seeks the current track to the specified position.")
+        .setDescription("在歌曲中快退或快進")
         .setDMPermission(false)
-        .addIntegerOption((option) => option.setName("minutes").setDescription("The amount of minutes to seek to.").setRequired(true))
-        .addIntegerOption((option) => option.setName("seconds").setDescription("The amount of seconds to seek to.").setRequired(true)),
+        .addIntegerOption((option) => option.setName("minutes").setDescription("跳過的分鐘數.").setRequired(true))
+        .addIntegerOption((option) => option.setName("seconds").setDescription("跳過的秒數.").setRequired(true)),
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -18,7 +18,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setTitle("當前沒有播放音樂... 再試一次 ? ❌.");
             return await interaction.reply({ embeds: [embed] });
         }
 
@@ -29,7 +29,7 @@ module.exports = {
 
         queue.node.seek(newPosition);
 
-        embed.setDescription(`The current track has been seeked to **${minutes !== 0 ? `${minutes} ${minutes == 1 ? "minute" : "minutes"} and ` : ""} ${seconds} ${seconds == 1 ? "second" : "seconds"}**.`);
+        embed.setTitle(`當前歌曲的時間設置 **${minutes !== 0 ? `${minutes} ${minutes == 1 ? "分" : "分"} and ` : ""} ${seconds} ${seconds == 1 ? "秒" : "秒"}**✅`);
 
         return await interaction.reply({ embeds: [embed] });
     },

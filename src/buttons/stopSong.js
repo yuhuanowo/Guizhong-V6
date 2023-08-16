@@ -3,7 +3,7 @@ const { Player } = require("discord-player");
 const config = require("../config");
 
 module.exports = {
-    name: "melody_stop",
+    name: "stop",
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -12,7 +12,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setDescription("當前沒有播放音樂... 再試一次 ? ❌");
             return await interaction.reply({
                 embeds: [embed],
                 ephemeral: true,
@@ -20,7 +20,7 @@ module.exports = {
         }
 
         queue.delete();
-        embed.setDescription(`<@${interaction.user.id}>: The music has been stopped.`);
+        embed.setDescription(`<@${interaction.user.id}>: 音樂已停止 ✅`);
 
         return await interaction.reply({ embeds: [embed] });
     },

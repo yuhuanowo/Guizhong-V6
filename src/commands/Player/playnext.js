@@ -7,9 +7,9 @@ const config = require("../../config");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("playnext")
-        .setDescription("Adds a track to the next position in the server queue.")
+        .setDescription("下一首你想播放的歌曲")
         .setDMPermission(false)
-        .addStringOption((option) => option.setName("query").setDescription("Enter a track name, artist name, or URL.").setRequired(true).setAutocomplete(config.autocomplete)),
+        .addStringOption((option) => option.setName("query").setDescription("輸入曲目名稱、作者名或 URL.").setRequired(true).setAutocomplete(config.autocomplete)),
     async execute(interaction, client) {
         await interaction.deferReply();
 
@@ -19,12 +19,12 @@ module.exports = {
         const channel = interaction.member.voice.channel;
 
         if (!channel) {
-            embed.setDescription("You aren't currently in a voice channel.");
+            embed.setTitle("您不在語音頻道中...再試一次 ? ❌");
             return await interaction.editReply({ embeds: [embed] });
         }
 
         if (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
-            embed.setDescription("I can't play music in that voice channel.");
+            embed.setTitle("我無法在該語音頻道中播放音樂...再試一次 ? ❌");
             return await interaction.editReply({ embeds: [embed] });
         }
 
@@ -36,8 +36,8 @@ module.exports = {
         if (!queue) {
             player.nodes.create(interaction.guild.id, {
                 leaveOnEmptyCooldown: config.leaveOnEmptyDelay,
-                leaveOnEndCooldown: config.leaveOnEndCooldown,
-                leaveOnStopCooldown: config.leaveOnStopCooldown,
+                leaveOnEndCooldown: config.leaveOnEndDelay,
+                leaveOnStopCooldown: config.leaveOnStopDelay,
                 selfDeaf: config.deafenBot,
                 metadata: {
                     channel: interaction.channel,
@@ -56,18 +56,18 @@ module.exports = {
 
             if (!res || !res.tracks || res.tracks.length === 0) {
                 if (queue) queue.delete();
-                embed.setDescription(`I couldn't find anything with the name **${query}**.`);
+                embed.setDescription(`找不到具有該名稱的播放列表 **${query}**...再試一次 ? ❌`);
                 return await interaction.editReply({ embeds: [embed] });
             }
 
             if (res.playlist) {
-                embed.setDescription("You can only use single tracks with the **/playnext** command. Use **/play** to add all tracks to the end of the queue.");
+                embed.setDescription("您只能通過 **/playnext**命令添加單個曲目。使用 **/play**將所有曲目添加到隊列末尾");
             } else {
                 try {
                     if (!queue.connection) await queue.connect(interaction.member.voice.channel);
                 } catch (err) {
                     if (queue) queue.delete();
-                    embed.setDescription("I can't join that voice channel.");
+                    embed.setDescription("我無法加入該語音頻道...再試一次 ? ❌");
                     return await interaction.editReply({ embeds: [embed] });
                 }
 
@@ -75,20 +75,20 @@ module.exports = {
                     queue.insertTrack(res.tracks[0]);
                     if (!queue.isPlaying()) await queue.node.play(queue.tracks[0]);
                 } catch (err) {
-                    logger.error("An error occurred whilst attempting to play this media:");
+                    logger.error("嘗試播放此媒體時發生錯誤:");
                     logger.error(err);
 
                     await queue.delete();
 
-                    embed.setDescription("This media doesn't seem to be working right now, please try again later.");
+                    embed.setDescription("該媒體目前似乎無法使用...再試一次 ? ❌");
                     return await interaction.followUp({ embeds: [embed] });
                 }
 
-                embed.setDescription(`Loaded **[${res.tracks[0].title}](${res.tracks[0].url})** by **${res.tracks[0].author}** into the next position in the server queue.`);
+                embed.setDescription(`已加載 **[${res.tracks[0].title}](${res.tracks[0].url})** by **${res.tracks[0].author}** 到隊列的下一個位置`);
             }
         } catch (err) {
             logger.error(err);
-            return interaction.editReply({ content: "An error occurred whilst attempting to play this media." });
+            return interaction.editReply({ content: "嘗試播放此媒體時發生錯誤...再試一次 ? ❌" });
         }
 
         return await interaction.editReply({ embeds: [embed] });

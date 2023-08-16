@@ -3,7 +3,7 @@ const { Player } = require("discord-player");
 const config = require("../config");
 
 module.exports = {
-    name: "melody_back_song",
+    name: "back_song",
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -12,7 +12,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setDescription("當前沒有播放音樂... 再試一次 ? ❌");
             return await interaction.reply({
                 embeds: [embed],
                 ephemeral: true,
@@ -20,7 +20,7 @@ module.exports = {
         }
 
         if (!queue.history.tracks.toArray()[0]) {
-            embed.setDescription("There was no music played before this track.");
+            embed.setDescription("在這首曲目之前沒有播放任何音樂...再試一次 ? ❌");
             return await interaction.reply({
                 embeds: [embed],
                 ephemeral: true,
@@ -28,7 +28,7 @@ module.exports = {
         }
 
         await queue.history.back();
-        embed.setDescription(`<@${interaction.user.id}>: Returning to the previous track in queue.`);
+        embed.setDescription(`<@${interaction.user.id}>: 播放上一首曲目 ✅.`);
 
         return await interaction.reply({ embeds: [embed] });
     },

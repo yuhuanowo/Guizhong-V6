@@ -13,7 +13,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setDescription("當前沒有播放音樂... 再試一次 ? ❌");
         } else {
             queue.filters.ffmpeg.toggle(["8D"]);
             embed.setDescription(`The **8D** filter is now ${queue.filters.ffmpeg.filters.includes("8D") ? "enabled." : "disabled."}`);

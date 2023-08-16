@@ -12,7 +12,7 @@ module.exports = {
 
         const embed = new EmbedBuilder();
 
-        embed.setDescription(`The music was stopped due to ${formatMS(config.leaveOnEmptyDelay)} inactivity.`);
+        embed.setTitle(`由於 ${formatMS(config.leaveOnEmptyDelay)} 不活動，音樂已停止`);
         embed.setColor(config.embedColour);
 
         queue.metadata.channel.send({ embeds: [embed] });

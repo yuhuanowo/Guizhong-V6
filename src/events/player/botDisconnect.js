@@ -11,7 +11,7 @@ module.exports = {
         }
 
         const embed = new EmbedBuilder();
-        embed.setDescription("The music was stopped because I was disconnected from the channel.");
+        embed.setTitle("列隊已清空，離開語音頻道! ❌");
         embed.setColor(config.embedColour);
 
         queue.metadata.channel.send({ embeds: [embed] });

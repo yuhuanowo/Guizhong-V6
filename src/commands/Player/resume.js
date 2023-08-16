@@ -4,7 +4,7 @@ const { Player } = require("discord-player");
 const config = require("../../config");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("resume").setDescription("Resumes the current track.").setDMPermission(false),
+    data: new SlashCommandBuilder().setName("resume").setDescription("恢復播放歌曲").setDMPermission(false),
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -13,18 +13,18 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setTitle("當前沒有播放音樂... 再試一次 ? ❌");
             return await interaction.reply({ embeds: [embed] });
         }
 
         if (!queue.node.isPaused()) {
-            embed.setDescription("The queue isn't currently paused.");
+            embed.setTitle("該歌曲已經在播放... 再試一次 ? ❌");
             return await interaction.reply({ embeds: [embed] });
         }
 
         queue.node.setPaused(false);
 
-        embed.setDescription(`Successfully unpaused **[${queue.currentTrack.title}](${queue.currentTrack.url})**.`);
+        embed.setTitle(`當前音樂 **${queue.currentTrack.title}**已恢復 ✅`);
 
         return await interaction.reply({ embeds: [embed] });
     },

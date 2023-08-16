@@ -6,7 +6,7 @@ const config = require("../config");
 const lyricsClient = lyricsExtractor(config.geniusKey);
 
 module.exports = {
-    name: "melody_song_lyrics",
+    name: "song_lyrics",
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -15,7 +15,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setDescription("當前沒有播放音樂... 再試一次 ? ❌");
             return await interaction.reply({
                 embeds: [embed],
                 ephemeral: true,
@@ -31,11 +31,11 @@ module.exports = {
                     name: `${res.title} - ${res.artist.name}`,
                     url: res.url,
                 });
-                embed.setDescription(res.lyrics.length > 4096 ? `[Click here to view lyrics](${res.url})` : res.lyrics);
+                embed.setDescription(res.lyrics.length > 4096 ? `[點擊這裡查看歌詞](${res.url})` : res.lyrics);
                 embed.setFooter({ text: "Courtesy of Genius" });
             })
             .catch(() => {
-                embed.setDescription("I couldn't find any lyrics for this track.");
+                embed.setDescription("找不到這首歌的任何歌詞❌");
             });
 
         return await interaction.editReply({ embeds: [embed] });

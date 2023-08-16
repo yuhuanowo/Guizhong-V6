@@ -5,7 +5,7 @@ const config = require("../../config");
 const fs = require("fs");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("shuffle").setDescription("Shuffles all tracks currently in the queue.").setDMPermission(false),
+    data: new SlashCommandBuilder().setName("shuffle").setDescription("隨機播放歌曲").setDMPermission(false),
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -14,12 +14,12 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setTitle("當前沒有播放音樂... 再試一次 ? ❌");
             return await interaction.reply({ embeds: [embed] });
         }
 
         if (!queue.tracks.toArray()[0]) {
-            embed.setDescription("There aren't any other tracks in the queue. Use **/play** to add some more.");
+            embed.setTitle("列隊中沒有兩首以上的音樂... 再試一次 ? ❌");
             return await interaction.reply({ embeds: [embed] });
         }
 
@@ -33,7 +33,7 @@ module.exports = {
         let newdata = JSON.stringify(data);
         fs.writeFileSync("src/data.json", newdata);
 
-        embed.setDescription(queue.tracks.length === 1 ? `Successfully shuffled **${queue.tracks.toArray().length} track**!` : `Successfully shuffled **${queue.tracks.toArray().length} tracks**!`);
+        embed.setTitle(queue.tracks.length === 1 ? `隊列已打亂 **${queue.tracks.toArray().length} 首歌! ✅**!` : `隊列已打亂 **${queue.tracks.toArray().length} 首歌! ✅**!`);
         return await interaction.reply({ embeds: [embed] });
     },
 };

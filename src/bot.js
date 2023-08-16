@@ -7,6 +7,8 @@ const HttpsProxyAgent = require("https-proxy-agent");
 const fs = require("node:fs");
 const logger = require("./utils/logger");
 const config = require("./config");
+const {IntentsBitField } = require('discord.js');
+
 
 process.on("unhandledRejection", (reason) => {
     logger.error("An unhandled rejection occurred in the main process:");
@@ -64,8 +66,10 @@ client.buttons = new Collection();
 
 const functions = fs.readdirSync("./src/functions").filter((file) => file.endsWith(".js"));
 
+
+
 (async () => {
-    logger.info("Initialising Melody...");
+    logger.info("Initialising Guizhong...");
     for (var file of functions) {
         require(`./functions/${file}`)(client);
     }

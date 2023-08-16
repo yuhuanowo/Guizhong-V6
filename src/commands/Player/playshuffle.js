@@ -8,9 +8,9 @@ const config = require("../../config");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("playshuffle")
-        .setDescription("Plays the specified playlist with a random track order.")
+        .setDescription("循環撥放歌曲清單")
         .setDMPermission(false)
-        .addStringOption((option) => option.setName("playlist").setDescription("Enter a playlist URL here to playshuffle.").setRequired(true)),
+        .addStringOption((option) => option.setName("playlist").setDescription("輸入撥放清單URL.").setRequired(true)),
     async execute(interaction, client) {
         await interaction.deferReply();
 
@@ -20,12 +20,12 @@ module.exports = {
         const channel = interaction.member.voice.channel;
 
         if (!channel) {
-            embed.setDescription("You aren't currently in a voice channel.");
+            embed.setTitle("您不在語音頻道中...再試一次 ? ❌");
             return await interaction.editReply({ embeds: [embed] });
         }
 
         if (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
-            embed.setDescription("I can't play music in that voice channel.");
+            embed.setTitle("我無法在該語音頻道中播放音樂...再試一次 ? ❌");
             return await interaction.editReply({ embeds: [embed] });
         }
 
@@ -37,8 +37,8 @@ module.exports = {
         if (!queue) {
             player.nodes.create(interaction.guild.id, {
                 leaveOnEmptyCooldown: config.leaveOnEmptyDelay,
-                leaveOnEndCooldown: config.leaveOnEndCooldown,
-                leaveOnStopCooldown: config.leaveOnStopCooldown,
+                leaveOnEndCooldown: config.leaveOnEndDelay,
+                leaveOnStopCooldown: config.leaveOnStopDelay,
                 selfDeaf: config.deafenBot,
                 metadata: {
                     channel: interaction.channel,
@@ -55,13 +55,13 @@ module.exports = {
         });
 
         if (!res) {
-            embed.setDescription(`I couldn't find a playlist with the name **${query}**`);
+            embed.setTitle(`找不到具有該名稱的播放列表 **${query}**...再試一次 ? ❌`);
             await queue.delete();
             return await interaction.editReply({ embeds: [embed] });
         }
 
         if (!res.playlist) {
-            embed.setDescription("The query specified doesn't appear to be a playlist.");
+            embed.setTitle("指定的查詢似乎不是播放列表...再試一次 ? ❌");
             await queue.delete();
             return await interaction.editReply({ embeds: [embed] });
         }
@@ -70,7 +70,7 @@ module.exports = {
             if (!queue.connection) await queue.connect(interaction.member.voice.channel);
         } catch (err) {
             if (queue) queue.delete();
-            embed.setDescription("I can't join that voice channel.");
+            embed.setTitle("我無法加入該語音頻道...再試一次 ? ❌");
             return await interaction.editReply({ embeds: [embed] });
         }
 
@@ -79,12 +79,12 @@ module.exports = {
             await queue.tracks.shuffle();
             if (!queue.isPlaying()) await queue.node.play(queue.tracks[0]);
         } catch (err) {
-            logger.error("An error occurred whilst attempting to play this media:");
+            logger.error("嘗試播放此媒體時發生錯誤:");
             logger.error(err);
 
             await queue.delete();
 
-            embed.setDescription("This media doesn't seem to be working right now, please try again later.");
+            embed.setTitle("該媒體目前似乎無法使用...再試一次 ? ❌.");
             return await interaction.followUp({ embeds: [embed] });
         }
 
@@ -95,7 +95,7 @@ module.exports = {
 
         fs.writeFileSync("src/data.json", JSON.stringify(parsed));
 
-        embed.setDescription(`**${res.tracks.length} tracks** from the ${res.playlist.type} **[${res.playlist.title}](${res.playlist.url})** have been loaded into the server queue.`);
+        embed.setTitle(`**${res.tracks.length} 首歌** 從撥放清單--> ${res.playlist.type} **[${res.playlist.title}](${res.playlist.url})** 已加載到歌曲隊列中✅`);
 
         return await interaction.editReply({ embeds: [embed] });
     },

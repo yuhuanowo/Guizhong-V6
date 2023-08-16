@@ -13,7 +13,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setDescription("當前沒有播放音樂... 再試一次 ? ❌");
         } else {
             queue.filters.ffmpeg.toggle(["normalizer2"]);
             embed.setDescription(`The **normalizer** filter is now ${queue.filters.ffmpeg.filters.includes("normalizer2") ? "enabled." : "disabled."}`);

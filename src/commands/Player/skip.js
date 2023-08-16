@@ -5,7 +5,7 @@ const config = require("../../config");
 const fs = require("fs");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("skip").setDescription("Skips the current track.").setDMPermission(false),
+    data: new SlashCommandBuilder().setName("skip").setDescription("跳過當前歌曲").setDMPermission(false),
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -14,7 +14,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setTitle("當前沒有播放音樂... 再試一次 ? ❌");
             return await interaction.reply({ embeds: [embed] });
         }
 
@@ -25,7 +25,9 @@ module.exports = {
 
         data["songs-skipped"] += 1;
 
-        embed.setDescription(`The track **[${queue.currentTrack.title}](${queue.currentTrack.url})** was skipped.`);
+        const success = queue.node.skip();
+
+        embed.setTitle(success?`當前音樂 **${queue.currentTrack.title}** 已跳過✅`:"出了些問題... 再試一次 ? ❌");
 
         let newdata = JSON.stringify(data);
         fs.writeFileSync("src/data.json", newdata);

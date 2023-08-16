@@ -4,7 +4,7 @@ const { Player } = require("discord-player");
 const config = require("../../config");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("back").setDescription("Returns to the previous track.").setDMPermission(false),
+    data: new SlashCommandBuilder().setName("back").setDescription("回到之前的歌曲").setDMPermission(false),
     async execute(interaction) {
         const player = Player.singleton();
         const queue = player.nodes.get(interaction.guild.id);
@@ -13,12 +13,12 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setTitle("當前沒有播放音樂...再試一次 ? ❌");
         } else if (!queue.history.tracks.toArray()[0]) {
-            embed.setDescription("There was no music played before this track.");
+            embed.setTitle("在這首曲目之前沒有播放任何音樂...再試一次 ? ❌");
         } else {
             await queue.history.back();
-            embed.setDescription("Returning to the previous track in queue.");
+            embed.setTitle("播放上一首曲目 ✅");
         }
 
         return await interaction.reply({ embeds: [embed] });

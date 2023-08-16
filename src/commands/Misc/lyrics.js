@@ -8,8 +8,8 @@ const lyricsClient = lyricsExtractor(config.geniusKey);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("lyrics")
-        .setDescription("View lyrics for the specified track.")
-        .addStringOption((option) => option.setName("query").setDescription("Enter a track name, artist name, or URL.").setRequired(true)),
+        .setDescription("查看指定歌曲的歌詞.")
+        .addStringOption((option) => option.setName("query").setDescription("輸入曲目名稱、作者名或 URL.").setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply();
 
@@ -23,11 +23,11 @@ module.exports = {
                     name: `${res.title} - ${res.artist.name}`,
                     url: res.url,
                 });
-                embed.setDescription(res.lyrics.length > 4096 ? `[Click here to view lyrics](${res.url})` : res.lyrics);
+                embed.setTitle(res.lyrics.length > 4096 ? `[點擊這裡查看歌詞](${res.url})` : res.lyrics);
                 embed.setFooter({ text: "Courtesy of Genius" });
             })
             .catch(() => {
-                embed.setDescription(`I couldn't find a track with the name **${interaction.options.getString("query")}**.`);
+                embed.setTitle(`我找不到帶有該名稱的曲目**${interaction.options.getString("query")}**.`);
             });
 
         return await interaction.editReply({

@@ -12,7 +12,7 @@ try {
         token: configFile.botToken ?? "",
         clientId: configFile.clientId ?? "",
         geniusKey: configFile.geniusApiKey ?? undefined,
-        embedColour: configFile.embedColour ?? "#2F3136",
+        embedColour: configFile.embedColour ?? "#F44336",
         analytics: configFile.enableAnalytics ?? true,
         autocomplete: configFile.enableAutocomplete ?? true,
         stopEmoji: configFile.emojis.stop ?? "⏹",
@@ -29,6 +29,7 @@ try {
         proxyUrl: configFile.proxy.connectionUrl ?? "",
         useYouTubeCookie: configFile.cookies.useCustomCookie ?? false,
         youtubeCookie: configFile.cookies.youtubeCookie ?? "",
+        status: configFile.status ?? "music",
     };
 } catch (e) {
     logger.error("Unable to parse config.yml. Please make sure it is valid YAML.");

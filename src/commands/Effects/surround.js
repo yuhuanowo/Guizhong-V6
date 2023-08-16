@@ -13,7 +13,7 @@ module.exports = {
         embed.setColor(config.embedColour);
 
         if (!queue || !queue.isPlaying()) {
-            embed.setDescription("There isn't currently any music playing.");
+            embed.setDescription("當前沒有播放音樂... 再試一次 ? ❌");
         } else {
             queue.filters.ffmpeg.toggle(["surrounding"]);
             embed.setDescription(`The **surround** filter is now ${queue.filters.ffmpeg.filters.includes("surrounding") ? "enabled." : "disabled."}`);

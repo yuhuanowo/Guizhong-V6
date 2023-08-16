@@ -15,7 +15,7 @@ module.exports = {
         }
 
         const errEmbed = new EmbedBuilder();
-        errEmbed.setDescription("An error occurred whilst attempting to perform this action. This media may not be supported.");
+        errEmbed.setDescription("嘗試執行此操作時發生錯誤。該媒體可能不受支持❌");
         errEmbed.setColor(config.embedColour);
 
         queue.metadata.channel.send({ embeds: [errEmbed] });
