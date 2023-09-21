@@ -25,38 +25,36 @@ module.exports = {
         }
 
         embed.setThumbnail(interaction.guild.iconURL({ size: 2048, dynamic: true }) || client.user.displayAvatarURL({ size: 2048, dynamic: true }));
-        embed.setAuthor({ name: `伺服器隊列 - ${interaction.guild.name}` });
+        embed.setAuthor({ name: `歌曲清單 - ${interaction.guild.name}` });
 
         const tracks = queuedTracks.map((track, i) => {
-            return `\`${i + 1}\` [${track.title}](${track.url}) by **${track.author}** (撥放用戶 : <@${track.requestedBy.id}>)`;
+            return `\`${i + 1}\` [${track.title}](${track.url}) by **${track.author}** (撥放by <@${track.requestedBy.id}>)`;
         });
         const songs = queuedTracks.length;
-        const nextSongs = songs > 5 ? `和 **${songs - 5}** 首其他歌曲...` : `在播放列表中有 **${songs}** 首歌曲...`;
+        const nextSongs = songs > 5 ? `和 **${songs - 5}** 首歌在隊列中.` : "";
         const progress = queue.node.createProgressBar();
 
-        embed.setTitle(`**當前曲目:**${queue.currentTrack.title} by **${queue.currentTrack.author}**\n${progress}\n\n${tracks.slice(0, 5).join("\n")}\n\n${nextSongs}`);
-        embed.setTimestamp();
-        embed.setColor("F44336")
+        embed.setDescription(`**當前曲目:** [${queue.currentTrack.title}](${queue.currentTrack.url}) by **${queue.currentTrack.author}**\n${progress}\n\n${tracks.slice(0, 5).join("\n")}\n\n${nextSongs}`);
 
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setCustomId(`back_song-${interaction.user.id}`)
+                .setCustomId(`back_song`)
                 .setEmoji(config.backEmoji.length <= 3 ? { name: config.backEmoji.trim() } : { id: config.backEmoji.trim() })
                 .setStyle(ButtonStyle.Secondary),
             new ButtonBuilder()
-                .setCustomId(`pause_song-${interaction.user.id}`)
+                .setCustomId(`pause_song`)
                 .setEmoji(config.pauseEmoji.length <= 3 ? { name: config.pauseEmoji.trim() } : { id: config.pauseEmoji.trim() })
                 .setStyle(ButtonStyle.Secondary),
             new ButtonBuilder()
-                .setCustomId(`skip_song-${interaction.user.id}`)
+                .setCustomId(`skip_song`)
                 .setEmoji(config.pauseEmoji.length <= 3 ? { name: config.skipEmoji.trim() } : { id: config.skipEmoji.trim() })
                 .setStyle(ButtonStyle.Secondary),
             new ButtonBuilder()
-                .setCustomId(`stop-${interaction.user.id}`)
+                .setCustomId(`stop`)
                 .setEmoji(config.stopEmoji.length <= 3 ? { name: config.stopEmoji.trim() } : { id: config.stopEmoji.trim() })
                 .setStyle(ButtonStyle.Secondary),
             new ButtonBuilder()
-                .setCustomId(`song_lyrics-${interaction.user.id}`)
+                .setCustomId(`song_lyrics`)
                 .setEmoji(config.lyricsEmoji.length <= 3 ? { name: config.lyricsEmoji.trim() } : { id: config.lyricsEmoji.trim() })
                 .setStyle(ButtonStyle.Secondary)
         );

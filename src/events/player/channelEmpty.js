@@ -33,7 +33,5 @@ function formatMS(ms) {
     if (m > 0 && s > 0) str += " and ";
     if (s > 0) str += `${s} second${s > 1 ? "s" : ""}`;
 
-    if (str.length > 0) str += " of";
-
     return str;
 }

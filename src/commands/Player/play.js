@@ -78,7 +78,7 @@ module.exports = {
                 await queue.delete();
 
                 embed.setTitle("該媒體目前似乎無法使用...再試一次 ? ❌");
-                return await interaction.followUp({ embeds: [embed] });
+                return await interaction.followUp({ embeds: [embed],ephemeral: true });
             }
 
             if (!res.playlist) {

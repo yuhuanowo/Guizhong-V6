@@ -30,6 +30,7 @@ try {
         useYouTubeCookie: configFile.cookies.useCustomCookie ?? false,
         youtubeCookie: configFile.cookies.youtubeCookie ?? "",
         status: configFile.status ?? "music",
+        youtubeapikey: configFile.youtubeapikey ?? "",
     };
 } catch (e) {
     logger.error("Unable to parse config.yml. Please make sure it is valid YAML.");
