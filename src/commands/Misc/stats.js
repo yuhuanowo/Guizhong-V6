@@ -16,4 +16,3 @@ module.exports = {
         return await interaction.reply({ embeds: [embed] });
     },
 };
-Í
