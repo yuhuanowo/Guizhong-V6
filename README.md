@@ -1,29 +1,29 @@
 <p align="center">
   <img src="https://i.imgur.com/phFnOFf.png" />
 </p>
-<h1 align="center">Melody</h1>
+<h1 align="center">Guizhong</h1>
 <p align="center">Discord music bot with many useful commands and effects.</p>
 
 <p align="center">
-  <a href="https://github.com/NerdyTechy/Melody/actions">
-    <img alt="Tests Passing" src="https://github.com/NerdyTechy/Melody/workflows/CodeQL/badge.svg" />
+  <a href="https://github.com/yuhuanowo/Guizhong-V6/actions">
+    <img alt="Tests Passing" src="https://github.com/yuhuanowo/Guizhong-V6/workflows/CodeQL/badge.svg" />
   </a>
-  <a href="https://github.com/NerdyTechy/Melody/graphs/contributors">
-    <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/NerdyTechy/Melody" />
+  <a href="https://github.com/yuhuanowo/Guizhong-V6/graphs/contributors">
+    <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/yuhuanowo/Guizhong-V6" />
   </a>
-  <a href="https://github.com/NerdyTechy/Melody/issues">
-    <img alt="Issues" src="https://img.shields.io/github/issues/NerdyTechy/Melody" />
+  <a href="https://github.com/yuhuanowo/Guizhong-V6/issues">
+    <img alt="Issues" src="https://img.shields.io/github/issues/yuhuanowo/Guizhong-V6" />
   </a>
-  <a href="https://github.com/NerdyTechy/Melody/blob/master/LICENSE">
-    <img alt="Issues" src="https://img.shields.io/github/license/NerdyTechy/Melody" />
+  <a href="https://github.com/yuhuanowo/Guizhong-V6/blob/master/LICENSE">
+    <img alt="Issues" src="https://img.shields.io/github/license/yuhuanowo/Guizhong-V6" />
   </a>
-  <a href="https://github.com/NerdyTechy/Melody/pulls">
-    <img alt="Issues" src="https://img.shields.io/github/issues-pr-closed/NerdyTechy/Melody" />
+  <a href="https://github.com/yuhuanowo/Guizhong-V6/pulls">
+    <img alt="Issues" src="https://img.shields.io/github/issues-pr-closed/yuhuanowo/Guizhong-V6" />
   </a>
-  <a href="https://github.com/NerdyTechy/Melody/commits">
-    <img alt="Issues" src="https://img.shields.io/github/last-commit/NerdyTechy/Melody" />
+  <a href="https://github.com/yuhuanowo/Guizhong-V6/commits">
+    <img alt="Issues" src="https://img.shields.io/github/last-commit/yuhuanowo/Guizhong-V6" />
   </a>
-  <a href="https://github.com/NerdyTechy/Melody"><img alt="Statistics Graphs" src="https://repobeats.axiom.co/api/embed/966fb1f700b2ca070b73426ccafcc5dd2b7576fb.svg"></a>
+  <a href="https://github.com/yuhuanowo/Guizhong-V6"><img alt="Statistics Graphs" src="https://repobeats.axiom.co/api/embed/daaa6b474d3a96f43412e9a9511ee042283d4973.svg"></a>
 </p>
 
 <h2>About Melody</h2>
