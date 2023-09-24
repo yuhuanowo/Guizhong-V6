@@ -12,7 +12,7 @@
         "lint:fix": "eslint . --ext .js --fix"
     },
     "author": "YuhuanStudio",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
         "@discord-player/extractor": "^4.4.1",
         "@discordjs/builders": "^1.6.3",
