@@ -26,7 +26,7 @@
   <a href="https://github.com/yuhuanowo/Guizhong-V6"><img alt="Statistics Graphs" src="https://repobeats.axiom.co/api/embed/daaa6b474d3a96f43412e9a9511ee042283d4973.svg"></a>
 </p>
 
-<h2>About Melody</h2>
+<h2>About Guizhong</h2>
 Melody was primarily developed because the best music bots shut down, and most alternatives had core features locked behind a paywall. Melody started as a bot that was just used in a server with some friends, and then became a project that I released publicly for anyone to use and maintain.
 
 <h2>Features</h2>
