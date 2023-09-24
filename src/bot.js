@@ -51,7 +51,7 @@ if (config.enableProxy) {
     agent = HttpsProxyAgent(proxy);
 }
 
-const client = new Client({ intents: [GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageTyping,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessages,GatewayIntentBits.DirectMessageReactions] });
 const player = new Player(client, { autoRegisterExtractor: false, ytdlOptions: { requestOptions: { agent, headers: { cookie: config.useYouTubeCookie ? config.youtubeCookie : null } } } });
 player.extractors.register(YouTubeExtractor);
 player.extractors.register(SpotifyExtractor);
@@ -65,6 +65,8 @@ client.commands = new Collection();
 client.buttons = new Collection();
 
 const functions = fs.readdirSync("./src/functions").filter((file) => file.endsWith(".js"));
+
+
 
 
 

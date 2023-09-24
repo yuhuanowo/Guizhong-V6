@@ -27,5 +27,14 @@ module.exports = (client) => {
             const event = require(filePath);
             player.events.on(event.name, (...args) => event.execute(...args, client));
         }
+
+        const guildEventsPath = path.join(__dirname, "../events/log");
+        const guildEventFiles = fs.readdirSync(guildEventsPath).filter((file) => file.endsWith(".js"));
+
+        for (const file of guildEventFiles) {
+            const filePath = path.join(guildEventsPath, file);
+            const event = require(filePath);
+            client.on(event.name, (...args) => event.execute(...args, client));
+        }
     };
 };
